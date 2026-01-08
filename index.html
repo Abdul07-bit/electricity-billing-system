@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ ElectraFlow | Electricity Billing System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-left">
+            <div class="brand-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>ElectraFlow Pro</h1>
+                        <p>Intelligent Electricity Billing</p>
+                    </div>
+                </div>
+                
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-calculator"></i>
+                        <div>
+                            <h3>Automated Billing</h3>
+                            <p>Instant bill generation</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-database"></i>
+                        <div>
+                            <h3>Centralized Database</h3>
+                            <p>Secure customer data</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h3>Smart Analytics</h3>
+                            <p>Consumption insights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <div class="login-form">
+                <h2>Sign In to Dashboard</h2>
+                <p>Enter your credentials to access the system</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" placeholder="Enter username" value="admin">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="Enter password" value="admin123">
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Role</label>
+                        <div class="role-selector">
+                            <label class="role-option">
+                                <input type="radio" name="role" value="admin" checked>
+                                <div class="role-content">
+                                    <i class="fas fa-crown"></i>
+                                    <span>Administrator</span>
+                                </div>
+                            </label>
+                            <label class="role-option">
+                                <input type="radio" name="role" value="cashier">
+                                <div class="role-content">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>Cashier</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In
+                    </button>
+                    
+                    <div class="demo-credentials">
+                        <h4><i class="fas fa-info-circle"></i> Demo Credentials</h4>
+                        <p><strong>Admin:</strong> admin / admin123</p>
+                        <p><strong>Cashier:</strong> cashier / cashier123</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password toggle
+        document.querySelector('.toggle-password').addEventListener('click', function() {
+            const password = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (password.type === 'password') {
+                password.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                password.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.querySelector('input[name="role"]:checked').value;
+            
+            // Demo validation
+            const demoUsers = {
+                'admin': 'admin123',
+                'cashier': 'cashier123'
+            };
+            
+            const button = document.querySelector('.btn-login');
+            const originalText = button.innerHTML;
+            
+            if (demoUsers[username] === password) {
+                // Save user session
+                localStorage.setItem('user', JSON.stringify({
+                    username: username,
+                    role: role,
+                    name: username.charAt(0).toUpperCase() + username.slice(1),
+                    loginTime: new Date().toISOString()
+                }));
+                
+                // Show success
+                button.innerHTML = '<i class="fas fa-check"></i> Success! Redirecting...';
+                button.classList.add('success');
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            } else {
+                // Show error
+                button.innerHTML = '<i class="fas fa-times"></i> Invalid Credentials';
+                button.classList.add('error');
+                
+                // Reset button
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('error');
+                }, 2000);
+            }
+        });
+
+        // Auto-fill based on role
+        document.querySelectorAll('input[name="role"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'admin') {
+                    document.getElementById('username').value = 'admin';
+                    document.getElementById('password').value = 'admin123';
+                } else {
+                    document.getElementById('username').value = 'cashier';
+                    document.getElementById('password').value = 'cashier123';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

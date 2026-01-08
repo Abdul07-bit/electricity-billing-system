@@ -1,0 +1,33 @@
+{
+    "app_name": "Electricity Billing System",
+    "version": "1.0.0",
+    "description": "Final Year Project - Computer Engineering",
+    "author": "Your Name",
+    "institution": "Your College",
+    "year": "2024",
+    
+    "settings": {
+        "currency": "INR",
+        "tax_rate": 0.0,
+        "late_fee_percentage": 2,
+        "due_days": 30,
+        "auto_generate_bills": true,
+        "enable_notifications": true
+    },
+    
+    "modules": {
+        "customer_management": true,
+        "meter_reading": true,
+        "billing": true,
+        "payments": true,
+        "reports": true,
+        "overdue_tracking": true,
+        "address_change": true
+    },
+    
+    "demo_data": {
+        "customers": 15,
+        "bills": 50,
+        "payments": 40
+    }
+}
